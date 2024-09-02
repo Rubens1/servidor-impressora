@@ -25,7 +25,7 @@ const upload = multer({ storage: storage });
 app.post('/print', upload.single('arquivo'), async (req, res) => {
     try {
         if (!req.file) {
-            return res.status(400).json({ error: 'Nenhum arquivo enviado' });
+            return res.status(400).json({ error: 'Nenhum arquivo enviado.' });
         }
 
         // Caminho do arquivo temporário salvo pelo Multer
@@ -34,13 +34,13 @@ app.post('/print', upload.single('arquivo'), async (req, res) => {
         // Verifica se o arquivo existe
         fs.access(pdfFilePath, fs.constants.F_OK, (err) => {
             if (err) {
-                return res.status(404).json({ error: 'Arquivo não encontrado' });
+                return res.status(404).json({ error: 'Arquivo não encontrado.' });
             }
 
             // Carrega o PDF enviado pelo cliente
             fs.readFile(pdfFilePath, async (readErr, existingPdfBytes) => {
                 if (readErr) {
-                    return res.status(500).json({ error: 'Erro ao ler o arquivo PDF' });
+                    return res.status(500).json({ error: 'Erro ao ler o arquivo PDF.' });
                 }
 
                 try {
@@ -68,7 +68,7 @@ app.post('/print', upload.single('arquivo'), async (req, res) => {
 
                     fs.writeFile(pdfOutputPath, modifiedPdfBytes, async (writeErr) => {
                         if (writeErr) {
-                            return res.status(500).json({ error: 'Erro ao salvar o PDF modificado' });
+                            return res.status(500).json({ error: 'Erro ao salvar o PDF modificado.' });
                         }
 
                         try {
@@ -90,12 +90,12 @@ app.post('/print', upload.single('arquivo'), async (req, res) => {
                             res.status(200).json({ message: 'Arquivo PDF enviado para impressão com sucesso.' });
                         } catch (printErr) {
                             console.error('Erro ao enviar para impressão: ', printErr);
-                            res.status(500).json({ error: 'Erro ao enviar para impressão' });
+                            res.status(500).json({ error: 'Erro ao enviar para impressão.' });
                         }
                     });
                 } catch (processErr) {
                     console.error('Erro ao processar o PDF: ', processErr);
-                    res.status(500).json({ error: 'Erro ao processar o PDF' });
+                    res.status(500).json({ error: 'Erro ao processar o PDF.' });
                 } finally {
                     // Remoção do arquivo temporário do upload
                     fs.unlink(pdfFilePath, (unlinkErr) => {
@@ -107,7 +107,7 @@ app.post('/print', upload.single('arquivo'), async (req, res) => {
             });
         });
     } catch (err) {
-        console.error('Erro no processamento do arquivo:', err);
+        console.error('Erro no processamento do arquivo: ', err);
         res.status(500).json({ error: 'Erro no processamento do arquivo.' });
     }
 });
