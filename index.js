@@ -78,23 +78,23 @@ app.post('/print', upload.single('arquivo'), async (req, res) => {
                             // Após enviar para a impressora, remove o arquivo
                             fs.unlink(pdfOutputPath, (unlinkErr) => {
                                 if (unlinkErr) {
-                                    console.error('Erro ao remover arquivo modificado:', unlinkErr);
+                                    console.error('Erro ao remover arquivo modificado: ', unlinkErr);
                                 }
                             });
 
                             // Listar impressoras disponíveis
                             const printers = await printer.getPrinters();
-                            console.log('Impressoras disponíveis:', printers);
+                            console.log('Impressoras disponíveis: ', printers);
 
                             // Envia resposta ao cliente
                             res.status(200).json({ message: 'Arquivo PDF enviado para impressão com sucesso.' });
                         } catch (printErr) {
-                            console.error('Erro ao enviar para impressão:', printErr);
+                            console.error('Erro ao enviar para impressão: ', printErr);
                             res.status(500).json({ error: 'Erro ao enviar para impressão' });
                         }
                     });
                 } catch (processErr) {
-                    console.error('Erro ao processar o PDF:', processErr);
+                    console.error('Erro ao processar o PDF: ', processErr);
                     res.status(500).json({ error: 'Erro ao processar o PDF' });
                 } finally {
                     // Remoção do arquivo temporário do upload
